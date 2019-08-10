@@ -1,1 +1,9 @@
-<p>navbar works!</p>
+<div class="form-group" style="margin: 20px">
+    <div *ngIf="session; else noSession">
+        <button class="btn btn-primary mr-2" routerLink="/user-profile">My Profile</button>
+        <button class="btn btn-primary" (click)="signOut()">Sign Out</button>
+    </div>
+    <ng-template #noSession>
+        <button class="btn btn-primary mr-2" routerLink="/user-auth">Sign In</button>   
+    </ng-template>
+</div>

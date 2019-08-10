@@ -4,6 +4,15 @@
 
 export const environment = {
   production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyCayJBaJF5Cs9Hq3vgS_tAx8OydANpvx8c",
+    authDomain: "forum-c2fe6.firebaseapp.com",
+    databaseURL: "https://forum-c2fe6.firebaseio.com",
+    projectId: "forum-c2fe6",
+    storageBucket: "",
+    messagingSenderId: "531366255378",
+    appId: "1:531366255378:web:dddf7daf524984ce"
+  }
 };
 
 /*

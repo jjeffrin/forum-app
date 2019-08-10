@@ -7,15 +7,22 @@
                 <form (ngSubmit)="signIn()" #signInForm="ngForm">
                     <div class="form-group">
                         <label for="email-login">Email ID</label>
-                        <input type="text" class="form-control" id="email-login" name="email" ngModel>
+                        <input type="text" class="form-control" id="email-login" name="email" #emailLogin="ngModel" ngModel email required>
                     </div>
+                    <div class="alert alert-warning" *ngIf="!emailLogin.valid && emailLogin.touched">Please enter a valid Email Id.</div>
                     <div class="form-group">
                         <label for="password-login">Password</label>
-                        <input type="password" class="form-control" id="password-login" name="password" ngModel>
+                        <input type="password" class="form-control" id="password-login" name="password" #passwordLogin="ngModel" ngModel required>
                     </div>
+                    <div class="alert alert-warning" *ngIf="!passwordLogin.valid && passwordLogin.touched">Please enter your password.</div>
                     <div class="form-group">
-                        <button class="btn btn-primary mr-2" type="submit">Sign In</button>
-                        <button class="btn btn-danger" type="submit" (click)="signIn()"><i class="fab fa-google"></i> Sign In With Google</button>
+                        <div *ngIf="loading; else showSignInButtons">
+                            <button class="btn btn-primary mr-2">Loading</button>
+                        </div>
+                        <ng-template #showSignInButtons>
+                            <button class="btn btn-primary mr-2" type="submit" [disabled]="!signInForm.valid">Sign In</button>
+                            <button class="btn btn-danger" type="submit" (click)="signIn()"><i class="fab fa-google"></i> Sign In With Google</button>
+                        </ng-template>
                     </div>
                 </form>
             </div>
