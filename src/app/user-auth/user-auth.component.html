@@ -15,6 +15,7 @@
                         <input type="password" class="form-control" id="password-login" name="password" #passwordLogin="ngModel" ngModel required>
                     </div>
                     <div class="alert alert-warning" *ngIf="!passwordLogin.valid && passwordLogin.touched">Please enter your password.</div>
+                    <div class="alert alert-warning" *ngIf="loginErrorMessage">{{loginErrorMessage}}</div>
                     <div class="form-group">
                         <div *ngIf="loading; else showSignInButtons">
                             <button class="btn btn-primary mr-2">Loading</button>
@@ -29,18 +30,27 @@
             <div class="col-sm-6">
                 <h2>Register Now</h2>
                 <hr>
-                <div class="form-group">
-                    <label for="email-reg">Email ID</label>
-                    <input type="text" class="form-control" id="email-reg">
-                </div>
-                <div class="form-group">
-                    <label for="password-reg">Password</label>
-                    <input type="password" class="form-control" id="password-reg">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary mr-2" type="button" (click)="signUp()">Sign Up</button>
-                    <button class="btn btn-danger" type="button" (click)="resetRegForm()">Reset</button>
-                </div>
+                <form (ngSubmit)="signUp()" #signUpForm="ngForm">
+                    <div class="form-group">
+                        <label for="email-reg">Email ID</label>
+                        <input type="text" class="form-control" id="email-reg" name="email" #email="ngModel" ngModel email required>
+                    </div>
+                    <div class="alert alert-warning" *ngIf="!email.valid && email.touched">Please enter a valid Email ID.</div>
+                    <div class="form-group">
+                        <label for="password-reg">Password</label>
+                        <input type="password" class="form-control" id="password-reg" name="password" #password="ngModel" ngModel minlength="8" required>
+                    </div>
+                    <div class="alert alert-warning" *ngIf="!password.valid && password.touched">Please enter a password of minimum 8 characters long.</div>
+                    <div class="form-group">
+                        <label for="password-reg">Retype Password</label>
+                        <input type="password" class="form-control" id="repassword-reg" name="rePassword" #rePassword="ngModel" ngModel minlength="8" required>
+                    </div>
+                    <div class="alert alert-warning" *ngIf="(rePassword.value != password.value) && rePassword.touched">The passwords do not match.</div>
+                    <div class="form-group">
+                        <button class="btn btn-primary mr-2" type="submit" [disabled]="!signUpForm.valid || rePassword.value != password.value">Sign Up</button>
+                        <button class="btn btn-danger" type="button" (click)="resetRegForm()">Reset</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-auth.component.css']
 })
 export class UserAuthComponent implements OnInit {
-  @ViewChild('signInForm', { static: false }) signInForm: HTMLFormElement
-  errorMessage: string;
+  @ViewChild('signInForm', { static: false }) signInForm: HTMLFormElement;
+  @ViewChild('signUpForm', { static: false }) signUpForm: HTMLFormElement;
+  loginErrorMessage: string;
+  regErrorMessage: string;
   loading: boolean = false;
 
   constructor(
@@ -21,18 +23,41 @@ export class UserAuthComponent implements OnInit {
   }
 
   signIn() {
-    console.log("called");
     this.loading = true;
-    console.log(this.loading);
     const { email, password } = this.signInForm.value; 
     this.authService.signIn(email, password).then(
       () => {
-        this.router.navigate(['/user-profile']);
+        if(this.authService.currentUser().emailVerified) {
+          this.router.navigate(['/user-profile']);
+        } else {
+          this.loading = false;
+          this.authService.signOut();
+          this.loginErrorMessage = "Please verify your email ID by clicking the link in the mail received.";
+        }        
       }
     ).catch(
       () => {
         this.loading = false;
-        this.errorMessage = "Invalid user credentials. Please try again.";
+        this.loginErrorMessage = "Invalid user credentials. Please try again.";
+      }
+    )
+  }
+
+  signUp() {
+    const { email, password, rePassword } = this.signUpForm.value;
+    console.log(email, password, rePassword);
+    this.authService.signUp(email, password).then(
+      () => {
+        this.authService.currentUser().sendEmailVerification().then(
+          () => {
+            console.log("send");
+            this.router.navigate(['/verification-send']);
+          }
+        )
+      }
+    ).catch(
+      () => {
+        this.regErrorMessage = "User registration failed. Please try again.";
       }
     )
   }

@@ -14,11 +14,19 @@ export class AuthService {
     return this.firebaseAuth.authState;
   }
 
+  currentUser() {
+    return this.firebaseAuth.auth.currentUser;
+  }
+
   signIn(email: string, password: string) {
     return this.firebaseAuth.auth.signInWithEmailAndPassword(email, password);
   }
   
   signOut() {
     return this.firebaseAuth.auth.signOut();
+  }
+
+  signUp(email: string, password: string) {
+    return this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 }
