@@ -32,7 +32,7 @@ export class UserAuthComponent implements OnInit {
         } else {
           this.loading = false;
           this.authService.signOut();
-          this.loginErrorMessage = "Please verify your email ID by clicking the link in the mail received.";
+          this.loginErrorMessage = "Please verify your email ID by clicking the link in the Email you have received from our team.";
         }        
       }
     ).catch(
@@ -45,7 +45,6 @@ export class UserAuthComponent implements OnInit {
 
   signUp() {
     const { email, password, rePassword } = this.signUpForm.value;
-    console.log(email, password, rePassword);
     this.authService.signUp(email, password).then(
       () => {
         this.authService.currentUser().sendEmailVerification().then(
@@ -57,9 +56,14 @@ export class UserAuthComponent implements OnInit {
       }
     ).catch(
       () => {
+        console.log("catch");
         this.regErrorMessage = "User registration failed. Please try again.";
       }
     )
+  }
+
+  resetRegForm() {
+    this.signUpForm.reset();
   }
 
 } 
