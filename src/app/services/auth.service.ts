@@ -29,4 +29,8 @@ export class AuthService {
   signUp(email: string, password: string) {
     return this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
   }
+
+  passwordResetLink(email: string) {
+    return this.firebaseAuth.auth.sendPasswordResetEmail(email);
+  }
 }

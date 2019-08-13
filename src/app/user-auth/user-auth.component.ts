@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './user-auth.component.html',
   styleUrls: ['./user-auth.component.css']
 })
-export class UserAuthComponent implements OnInit {
+export class UserAuthComponent implements OnInit, AfterViewInit {
   @ViewChild('signInForm', { static: false }) signInForm: HTMLFormElement;
   @ViewChild('signUpForm', { static: false }) signUpForm: HTMLFormElement;
   loginErrorMessage: string;

@@ -7,6 +7,7 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerificationSentComponent } from './verification-sent/verification-sent.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const appRoutes: Routes = [
     {
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
             {
                 path: 'verification-sent',
                 component: VerificationSentComponent
+            },
+            {
+                path: 'reset-password/:email',
+                component: ResetPasswordComponent
             }
         ]
     },
