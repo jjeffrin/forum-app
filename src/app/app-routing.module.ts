@@ -6,6 +6,7 @@ import { UserAuthComponent } from './user-auth/user-auth.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { VerificationSentComponent } from './verification-sent/verification-sent.component';
 
 const appRoutes: Routes = [
     {
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
             {
                 path: 'user-profile',
                 component: UserProfileComponent
+            },
+            {
+                path: 'verification-sent',
+                component: VerificationSentComponent
             }
         ]
     },

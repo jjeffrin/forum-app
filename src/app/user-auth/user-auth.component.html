@@ -1,58 +1,60 @@
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <h2>Sign In</h2>
-                <hr>
-                <form (ngSubmit)="signIn()" #signInForm="ngForm">
-                    <div class="form-group">
-                        <label for="email-login">Email ID</label>
-                        <input type="text" class="form-control" id="email-login" name="email" #emailLogin="ngModel" ngModel email required>
-                    </div>
-                    <div class="alert alert-warning" *ngIf="!emailLogin.valid && emailLogin.touched">Please enter a valid Email Id.</div>
-                    <div class="form-group">
-                        <label for="password-login">Password</label>
-                        <input type="password" class="form-control" id="password-login" name="password" #passwordLogin="ngModel" ngModel required>
-                    </div>
-                    <div class="alert alert-warning" *ngIf="!passwordLogin.valid && passwordLogin.touched">Please enter your password.</div>
-                    <div class="alert alert-warning" *ngIf="loginErrorMessage">{{loginErrorMessage}}</div>
-                    <div class="form-group">
-                        <div *ngIf="loading; else showSignInButtons">
-                            <button class="btn btn-primary mr-2">Loading</button>
-                        </div>
-                        <ng-template #showSignInButtons>
-                            <button class="btn btn-primary mr-2" type="submit" [disabled]="!signInForm.valid">Sign In</button>
-                            <button class="btn btn-danger" type="submit" (click)="signIn()"><i class="fab fa-google"></i> Sign In With Google</button>
-                        </ng-template>
-                    </div>
-                </form>
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Sign In</h2>
+        <hr>
+        <form (ngSubmit)="signIn()" #signInForm="ngForm">
+            <div class="form-group">
+                <label for="email-login">Email ID</label>
+                <input type="text" class="form-control" id="email-login" name="email" #emailLogin="ngModel" ngModel email required>
             </div>
-            <div class="col-sm-6">
-                <h2>Register Now</h2>
-                <hr>
-                <form (ngSubmit)="signUp()" #signUpForm="ngForm">
-                    <div class="form-group">
-                        <label for="email-reg">Email ID</label>
-                        <input type="text" class="form-control" id="email-reg" name="email" #email="ngModel" ngModel email required>
-                    </div>
-                    <div class="alert alert-warning" *ngIf="!email.valid && email.touched">Please enter a valid Email ID.</div>
-                    <div class="form-group">
-                        <label for="password-reg">Password</label>
-                        <input type="password" class="form-control" id="password-reg" name="password" #password="ngModel" ngModel minlength="8" required>
-                    </div>
-                    <div class="alert alert-warning" *ngIf="!password.valid && password.touched">Please enter a password of minimum 8 characters long.</div>
-                    <div class="form-group">
-                        <label for="password-reg">Retype Password</label>
-                        <input type="password" class="form-control" id="repassword-reg" name="rePassword" #rePassword="ngModel" ngModel minlength="8" required>
-                    </div>
-                    <div class="alert alert-warning" *ngIf="(rePassword.value != password.value) && rePassword.touched">The passwords do not match.</div>
-                    <div class="alert alert-warning" *ngIf="regErrorMessage">{{regErrorMessage}}</div>
-                    <div class="form-group">
-                        <button class="btn btn-primary mr-2" type="submit" [disabled]="!signUpForm.valid || rePassword.value != password.value">Sign Up</button>
-                        <button class="btn btn-danger" type="button" (click)="resetRegForm()">Reset</button>
-                    </div>
-                </form>
+            <div class="alert alert-warning" *ngIf="!emailLogin.valid && emailLogin.touched">Please enter a valid Email Id.</div>
+            <div class="form-group">
+                <label for="password-login">Password</label>
+                <input type="password" class="form-control" id="password-login" name="password" #passwordLogin="ngModel" ngModel required>
+                <p><a routerLink="/reset-password/{{emailLogin.value}}">Forgot Password ?</a></p>
             </div>
-        </div>
+            <div class="alert alert-warning" *ngIf="!passwordLogin.valid && passwordLogin.touched">Please enter your password.</div>
+            <div class="alert alert-warning" *ngIf="loginErrorMessage">{{loginErrorMessage}}</div>
+            <div class="form-group">
+                <div *ngIf="loginLoading; else showSignInButtons">
+                    <button class="btn btn-primary mr-2">Loading</button>
+                </div>
+                <ng-template #showSignInButtons>
+                    <button class="btn btn-primary mr-2" type="submit" [disabled]="!signInForm.valid">Sign In</button>
+                    <button class="btn btn-danger" type="submit" (click)="signIn()"><i class="fab fa-google"></i> Sign In With Google</button>
+                </ng-template>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <h2>Register Now</h2>
+        <hr>
+        <form (ngSubmit)="signUp()" #signUpForm="ngForm">
+            <div class="form-group">
+                <label for="email-reg">Email ID</label>
+                <input type="text" class="form-control" id="email-reg" name="email" #email="ngModel" ngModel email required>
+            </div>
+            <div class="alert alert-warning" *ngIf="!email.valid && email.touched">Please enter a valid Email ID.</div>
+            <div class="form-group">
+                <label for="password-reg">Password</label>
+                <input type="password" class="form-control" id="password-reg" name="password" #password="ngModel" ngModel minlength="8" required>
+            </div>
+            <div class="alert alert-warning" *ngIf="!password.valid && password.touched">Please enter a password of minimum 8 characters long.</div>
+            <div class="form-group">
+                <label for="password-reg">Retype Password</label>
+                <input type="password" class="form-control" id="repassword-reg" name="rePassword" #rePassword="ngModel" ngModel minlength="8" required>
+            </div>
+            <div class="alert alert-warning" *ngIf="(rePassword.value != password.value) && rePassword.touched">The passwords do not match.</div>
+            <div class="alert alert-warning" *ngIf="regErrorMessage">{{regErrorMessage}}</div>
+            <div class="form-group">
+                <div *ngIf="regLoading; else showSignUpButtons">
+                    <button class="btn btn-primary">Loading</button>
+                </div>
+                <ng-template #showSignUpButtons>
+                    <button class="btn btn-primary mr-2" type="submit" [disabled]="!signUpForm.valid || rePassword.value != password.value">Sign Up</button>
+                    <button class="btn btn-danger" type="button" (click)="resetRegForm()">Reset</button>
+                </ng-template>                
+            </div>
+        </form>
     </div>
 </div>

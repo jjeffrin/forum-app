@@ -16,6 +16,8 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthService } from './services/auth.service';
+import { VerificationSentComponent } from './verification-sent/verification-sent.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AuthService } from './services/auth.service';
     NavbarComponent,
     WrapperComponent,
     WelcomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    VerificationSentComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
