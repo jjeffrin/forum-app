@@ -8,6 +8,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerificationSentComponent } from './verification-sent/verification-sent.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 const appRoutes: Routes = [
     {
@@ -31,8 +32,16 @@ const appRoutes: Routes = [
                 component: VerificationSentComponent
             },
             {
+                path: 'reset-password',
+                component: ResetPasswordComponent
+            },
+            {
                 path: 'reset-password/:email',
                 component: ResetPasswordComponent
+            },
+            {
+                path: 'user-settings',
+                component: UserSettingsComponent
             }
         ]
     },

@@ -5,7 +5,7 @@
         <form (ngSubmit)="signIn()" #signInForm="ngForm">
             <div class="form-group">
                 <label for="email-login">Email ID</label>
-                <input type="text" class="form-control" id="email-login" name="email" #emailLogin="ngModel" ngModel email required>
+                <input type="text" class="form-control" id="email-login" name="email" #emailLogin="ngModel" ngModel email required ([ngModel])="emailValue">
             </div>
             <div class="alert alert-warning" *ngIf="!emailLogin.valid && emailLogin.touched">Please enter a valid Email Id.</div>
             <div class="form-group">

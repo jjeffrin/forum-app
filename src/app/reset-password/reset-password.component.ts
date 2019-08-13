@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -8,12 +8,12 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
+  @ViewChild('form', { static: false }) formData: HTMLFormElement;
   email: string;
   successMessage: string;
   errorMessage: string;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService
   ) { }
@@ -28,16 +28,22 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   sendPasswordResetLink() {
-    console.log("send");
-    this.authService.passwordResetLink(this.email).then(
-      () => {
-        this.successMessage = "Password reset mail is sent to the above mentioned mail. Click on the link in the mail to reset your password and then login again.";
-      }
-    ).catch(
-      () => {
-        this.errorMessage = "Something went wrong. Please try again.";
-      }
-    );
+    if (this.formData.valid) {
+      this.authService.passwordResetLink(this.email).then(
+        () => {
+          this.errorMessage = '';
+          this.successMessage = "Password reset mail is sent to the above mentioned mail. Click on the link in the mail to reset your password and then login again.";
+        }
+      ).catch(
+        () => {
+          console.log('err')
+          this.successMessage = '';
+          this.errorMessage = "Something went wrong. Please try again.";
+        }
+      );
+    } else {
+      this.successMessage = '';
+      this.errorMessage = "Please enter a valid email Id.";
+    }
   }
-
 }

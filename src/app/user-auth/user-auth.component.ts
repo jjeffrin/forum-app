@@ -21,6 +21,13 @@ export class UserAuthComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.authService.checkSession().subscribe(
+      user => {
+        if (user) {
+          this.router.navigate(['/user-profile']);
+        }
+      }
+    );
   }
 
   signIn() {

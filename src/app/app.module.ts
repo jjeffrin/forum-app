@@ -18,6 +18,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthService } from './services/auth.service';
 import { VerificationSentComponent } from './verification-sent/verification-sent.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     WelcomeComponent,
     UserProfileComponent,
     VerificationSentComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,
