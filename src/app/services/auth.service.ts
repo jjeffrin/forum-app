@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthService {
     private firebaseAuth: AngularFireAuth
   ) { }
 
-  checkSession() {
+  checkSession() {    
     return this.firebaseAuth.authState;
   }
 
@@ -33,4 +34,5 @@ export class AuthService {
   passwordResetLink(email: string) {
     return this.firebaseAuth.auth.sendPasswordResetEmail(email);
   }
+
 }

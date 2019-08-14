@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
   templateUrl: './user-auth.component.html',
   styleUrls: ['./user-auth.component.css']
 })
-export class UserAuthComponent implements OnInit, AfterViewInit {
+export class UserAuthComponent implements OnInit {
   @ViewChild('signInForm', { static: false }) signInForm: HTMLFormElement;
   @ViewChild('signUpForm', { static: false }) signUpForm: HTMLFormElement;
   loginErrorMessage: string;
   regErrorMessage: string;
+  verifyMessage: string;
   loginLoading: boolean = false;
-  regLoading: boolean = false
+  regLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -21,13 +22,6 @@ export class UserAuthComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.authService.checkSession().subscribe(
-      user => {
-        if (user) {
-          this.router.navigate(['/user-profile']);
-        }
-      }
-    );
   }
 
   signIn() {
@@ -56,11 +50,13 @@ export class UserAuthComponent implements OnInit, AfterViewInit {
     const { email, password } = this.signUpForm.value;
     this.authService.signUp(email, password).then(
       () => {
-        this.authService.currentUser().sendEmailVerification().then(
-          () => {
-            this.authService.signOut();
-            this.regLoading = false;            
+        const checkUser = this.authService.currentUser();
+        this.authService.signOut();
+        checkUser.sendEmailVerification().then(
+          () => {        
+            this.authService.signOut();    
             this.router.navigate(['/verification-sent']);
+            this.regLoading = false;
           }
         )
       }

@@ -41,9 +41,10 @@
             </div>
             <div class="alert alert-warning" *ngIf="!password.valid && password.touched">Please enter a password of minimum 8 characters long.</div>
             <div class="form-group">
-                <label for="password-reg">Retype Password</label>
+                <label for="repassword-reg">Retype Password</label>
                 <input type="password" class="form-control" id="repassword-reg" name="rePassword" #rePassword="ngModel" ngModel minlength="8" required>
             </div>
+            <div *ngIf="verifyMessage">{{verifyMessage}}</div>
             <div class="alert alert-warning" *ngIf="(rePassword.value != password.value) && rePassword.touched">The passwords do not match.</div>
             <div class="alert alert-warning" *ngIf="regErrorMessage">{{regErrorMessage}}</div>
             <div class="form-group">

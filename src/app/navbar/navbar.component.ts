@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit {
         this.session = false;
       }
     });
+
   }
 
   signOut() {

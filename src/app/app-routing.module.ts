@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
@@ -10,6 +12,9 @@ import { VerificationSentComponent } from './verification-sent/verification-sent
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 
+const redirectUnauthorizedToLogin = () =>  redirectUnauthorizedTo(['user-auth']);
+const redirectLoggedInToProfile = () => redirectLoggedInTo(['user-profile']);
+
 const appRoutes: Routes = [
     {
         path: '',
@@ -17,31 +22,45 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: WelcomeComponent
+                component: WelcomeComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe: redirectLoggedInToProfile }
             },
             {
                 path: 'user-auth',
-                component: UserAuthComponent
+                component: UserAuthComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe: redirectLoggedInToProfile }
             },
             {
                 path: 'user-profile',
-                component: UserProfileComponent
+                component: UserProfileComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe:  redirectUnauthorizedToLogin }
             },
             {
                 path: 'verification-sent',
-                component: VerificationSentComponent
+                component: VerificationSentComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe: redirectLoggedInToProfile }
             },
             {
                 path: 'reset-password',
-                component: ResetPasswordComponent
+                component: ResetPasswordComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe: redirectLoggedInToProfile }
             },
             {
                 path: 'reset-password/:email',
-                component: ResetPasswordComponent
+                component: ResetPasswordComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe: redirectLoggedInToProfile }
             },
             {
                 path: 'user-settings',
-                component: UserSettingsComponent
+                component: UserSettingsComponent,
+                canActivate: [ AngularFireAuthGuard ],
+                data: { authGuardPipe:  redirectUnauthorizedToLogin }
             }
         ]
     },
