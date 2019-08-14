@@ -2,6 +2,25 @@
     <div class="col-sm-6">
         <h2>Personal Info</h2>
         <hr>
-        
+        <!-- Nickname -->
+        <h4 class="text-muted">Set Nickname <span *ngIf="nickNameUpdating"><img src="https://loading.io/spinners/curve-bars/index.curved-bar-spinner.svg" alt="loading" height="30px" width="30px"></span>
+        </h4>
+        <div class="form-group">
+            <input type="text" class="form-control" name="nickName" [(ngModel)]="nickName">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary mr-2" (click)="selectNickName()">Set Nickname</button>
+            <button class="btn btn-info" (click)="generateName()">Generate Nickname</button>
+        </div>
+        <br>
+        <!-- Theme -->
+        <h4 class="text-muted">Set Theme <span *ngIf="nickNameUpdating"><img src="https://loading.io/spinners/curve-bars/index.curved-bar-spinner.svg" alt="loading" height="30px" width="30px"></span>
+        </h4>
+        <div class="form-group">
+            <select name="themeSelector" class="form-control" [(ngModel)]="theme" (change)="selectTheme()">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
     </div>
 </div>

@@ -43,7 +43,8 @@ export class AuthService {
 
   createDatabaseRecordForUser() {
     return this.database.collection('users').doc(this.currentUser().uid).set({
-      email: this.currentUser().email
+      email: this.currentUser().email,
+      theme: 'light'
     });
   }
 

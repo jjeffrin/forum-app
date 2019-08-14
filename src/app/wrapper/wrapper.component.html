@@ -2,7 +2,7 @@
 <app-navbar></app-navbar>
 
 <!-- Container -->
-<div class="jumbotron">
+<div class="jumbotron" [ngClass]="{'darkTheme': theme=='dark', 'lightTheme': theme=='light'}">
     <div class="container">
         <router-outlet></router-outlet>
     </div>

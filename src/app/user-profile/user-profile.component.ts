@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'firebase';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,10 +12,11 @@ import { User } from 'firebase';
 export class UserProfileComponent implements OnInit {
 
   user: User;
+  nickName: string;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private databaseService: DatabaseService
   ) { }
 
   ngOnInit() {
@@ -26,6 +28,13 @@ export class UserProfileComponent implements OnInit {
         }
       }
     );
+
+    this.databaseService.getUserDetails().subscribe(
+      data => {
+        this.nickName = data.nickName;
+      }
+    );
+    
   }
 
 }
