@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,7 +9,8 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   constructor(
-    private firebaseAuth: AngularFireAuth
+    private firebaseAuth: AngularFireAuth,
+    private database: AngularFirestore
   ) { }
 
   checkSession() {    
@@ -33,6 +35,16 @@ export class AuthService {
 
   passwordResetLink(email: string) {
     return this.firebaseAuth.auth.sendPasswordResetEmail(email);
+  }
+
+  isUserPresentInDatabase() {    
+    return this.database.collection('users').doc(this.currentUser().uid).get();
+  }
+
+  createDatabaseRecordForUser() {
+    return this.database.collection('users').doc(this.currentUser().uid).set({
+      email: this.currentUser().email
+    });
   }
 
 }

@@ -30,7 +30,23 @@ export class UserAuthComponent implements OnInit {
     this.authService.signIn(email, password).then(
       () => {
         if(this.authService.currentUser().emailVerified) {
-          this.router.navigate(['/user-profile']);
+          // Firstly, check if user is present in database record
+          this.authService.isUserPresentInDatabase().subscribe(
+            data => {
+              if (data.exists) {
+                // Secondly, if present, go to user-profile
+                this.router.navigate(['/user-profile']);
+              }
+              else {
+                // Thirdly, else, create database record and then go to user-profile 
+                this.authService.createDatabaseRecordForUser().then(
+                  () => { this.router.navigate(['/user-profile']); }
+                ).catch(
+                  () => { this.authService.signOut(); }
+                )
+              }
+            }
+          )   
         } else {
           this.loginLoading = false;
           this.authService.signOut();
