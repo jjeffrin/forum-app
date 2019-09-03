@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../services/database.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -10,20 +11,30 @@ export class UserSettingsComponent implements OnInit {
   nickName: string;
   nickNameUpdating: boolean = false;
   theme: string;
+  uid: string;
 
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.nickNameUpdating = true;
-    this.databaseService.getUserDetails().subscribe(
+    this.authService.checkSession().subscribe(
       data => {
-        this.nickName = data.nickName;
-        this.theme = data.theme;
-        this.nickNameUpdating = false;
+        if (data) {
+          this.databaseService.getUserDetails(data.uid).subscribe(
+            (data: any) => {
+              this.uid = data.uid;
+              this.nickName = data.nickName;
+              this.theme = data.theme;
+              this.nickNameUpdating = false;
+            }
+          );
+        }
       }
     )
+
   }
 
   generateName() {
@@ -42,10 +53,17 @@ export class UserSettingsComponent implements OnInit {
   }
 
   selectTheme() {
+    console.log(this.theme);
     this.nickNameUpdating = true;
-    this.databaseService.setTheme(this.theme).then(
-      () => {
-        this.nickNameUpdating = false;
+    this.authService.checkSession().subscribe(
+      data => {
+        if (data) {
+          this.databaseService.setTheme(this.theme, data.uid).then(
+            () => {
+              this.nickNameUpdating = false;
+            }
+          );
+        }
       }
     )
   }

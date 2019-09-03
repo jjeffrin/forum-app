@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../services/database.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-wrapper',
@@ -9,15 +10,26 @@ import { DatabaseService } from '../services/database.service';
 export class WrapperComponent implements OnInit {
   theme: string;
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.databaseService.getUserDetails().subscribe(
+    this.authService.checkSession().subscribe(
       data => {
-        this.theme = data.theme;
+        if (data) {
+          this.databaseService.getUserDetails(data.uid).subscribe(
+            (data: any) => {
+              console.log("wrapper change")
+              this.theme = data.theme;
+            }
+          );
+        } else {
+          this.theme = "light"
+        }
       }
     )
+    
   }
 
 }
