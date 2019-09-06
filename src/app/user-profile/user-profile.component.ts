@@ -23,19 +23,18 @@ export class UserProfileComponent implements OnInit {
     this.authService.checkSession().subscribe(
       user => {
         if (user) {
-          console.log(user.uid);
+          console.log(user.displayName);
           this.user = user;   
           this.databaseService.getUserDetails(user.uid).subscribe(
             (data: any) => {
               console.log(data);
               this.nickName = data.nickName;
+              console.log(this.nickName);
             }
           );             
         }
       }
-    );
-
-    
+    );    
   }
 
 }
